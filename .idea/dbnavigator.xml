@@ -28,15 +28,23 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="efd35427-8fa8-4f29-8957-7ce69a8375eb">
-      <console name="Connection" type="STANDARD" schema="" session="Main" />
+    <connection id="c39a84de-02d2-4c61-956c-4d25280ba097">
+      <console name="Connection" type="STANDARD" schema="information_schema" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="efd35427-8fa8-4f29-8957-7ce69a8375eb" />
+    <connection id="c39a84de-02d2-4c61-956c-4d25280ba097" />
+  </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="c39a84de-02d2-4c61-956c-4d25280ba097" dataset="public.PizzasToIngredients" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="c39a84de-02d2-4c61-956c-4d25280ba097" dataset="public.Ingredient" active-filter-id="EMPTY_FILTER">
+      <filter id="990f820f-df65-41e7-bb9f-b6b589afb7bd" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="id" operator="=" value="" active="true" />
+      </filter>
+    </filter-actions>
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -67,13 +75,13 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="efd35427-8fa8-4f29-8957-7ce69a8375eb" active="true" signed="true">
+      <connection id="c39a84de-02d2-4c61-956c-4d25280ba097" active="true" signed="true">
         <database>
           <name value="Connection" />
           <description value="" />
           <database-type value="POSTGRES" />
           <config-type value="BASIC" />
-          <database-version value="9999.0" />
+          <database-version value="14.6" />
           <driver-source value="BUILTIN" />
           <driver-library value="" />
           <driver value="" />
@@ -83,7 +91,7 @@
           <database value="pizza" />
           <type value="USER_PASSWORD" />
           <user value="postgres" />
-          <deprecated-pwd value="" />
+          <deprecated-pwd value="cG9zdGdyZXM=" />
         </database>
         <properties>
           <auto-commit value="false" />

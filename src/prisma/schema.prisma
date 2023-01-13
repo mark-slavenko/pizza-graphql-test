@@ -8,44 +8,48 @@ datasource db {
 }
 
 model Order {
-  id           Int              @id @default(autoincrement())
-  date         DateTime
-  createdAt    DateTime         @default(now())
-  pizzas       OrdersToPizzas[]
+  id        Int              @id @default(autoincrement())
+  date      DateTime
+  createdAt DateTime         @default(now())
+  pizzas    OrdersToPizzas[]
 }
 
 model Pizza {
-  id                Int                    @id @default(autoincrement())
-  name              String                 @unique
-  price             Float
-  createdAt         DateTime               @default(now())
-  ingredients       PizzasToIngredients[]
+  id          Int                   @id @default(autoincrement())
+  name        String                @unique
+  price       Float
+  createdAt   DateTime              @default(now())
+  ingredients PizzasToIngredients[]
+  orders      OrdersToPizzas[]
 }
 
 model Ingredient {
-  id          Int          @id @default(autoincrement())
-  name        String       @unique
-  cost        Float
-  unit        String
-  createdAt   DateTime     @default(now())
+  id        Int                   @id @default(autoincrement())
+  name      String                @unique
+  cost      Float
+  unit      String
+  createdAt DateTime              @default(now())
+  pizzas    PizzasToIngredients[]
 }
 
 model OrdersToPizzas {
-  order       Order     @relation(fields: [orderId], references: [id])
-  orderId     Int
-  pizza       Category  @relation(fields: [pizzaId], references: [id])
-  pizzaId     Int
-  assignedAt  DateTime  @default(now())
+  order      Order    @relation(fields: [orderId], references: [id])
+  orderId    Int
+  pizza      Pizza    @relation(fields: [pizzaId], references: [id])
+  pizzaId    Int
+  number     Int
+  assignedAt DateTime @default(now())
 
   @@id([orderId, pizzaId])
 }
 
 model PizzasToIngredients {
-  pizza         Pizza       @relation(fields: [pizzaId], references: [id])
-  pizzaId       Int
-  ingredient    Ingredient  @relation(fields: [ingredientId], references: [id])
-  ingredientId  Int
-  assignedAt    DateTime    @default(now())
+  pizza        Pizza      @relation(fields: [pizzaId], references: [id])
+  pizzaId      Int
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  ingredientId Int
+  units        Int
+  assignedAt   DateTime   @default(now())
 
-  @@id([orderId, pizzaId])
+  @@id([ingredientId, pizzaId])
 }
