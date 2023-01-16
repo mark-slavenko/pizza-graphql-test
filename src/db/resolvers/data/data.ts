@@ -1,10 +1,10 @@
 import moment from "moment";
 
 import prisma from '../../../prisma/prisma';
-import { splitByWeeks } from "./helpers";
+import { splitByWeeks, calculateData } from "./helpers";
 
 
-const queryData = async (_parent: any, { filters }: IProps) => {
+const queryData = async (_parent: any, { filters }: IProps): Promise<IDataToReturn> => {
   try {
     const { startDate, endDate, monthNumber, pizzas } = filters;
     let dateLTE: Date | null = null;
@@ -60,7 +60,11 @@ const queryData = async (_parent: any, { filters }: IProps) => {
           include: {
             pizza: {
               include: {
-                ingredients: true
+                ingredients: {
+                  include: {
+                    ingredient: true
+                  }
+                }
               }
             }
           }
@@ -68,15 +72,20 @@ const queryData = async (_parent: any, { filters }: IProps) => {
       }
     });
 
-    // @ts-ignore
+
     const dataSplittedByWeeks = splitByWeeks(allData);
+    const calculatedDataByWeeks = dataSplittedByWeeks.map(weekData => calculateData(weekData));
+    const calculatedTotalData = calculateData(allData);
+
+    const { unitsSold, ingredientsUsed, costOfIngredients, sales } = calculatedTotalData;
+
 
     return {
-      unitsSold: 1,
-      ingredientsUsed: 100,
-      costOfIngredients: 100.0,
-      sales: 200.0,
-      weeks: []
+      unitsSold,
+      ingredientsUsed,
+      costOfIngredients,
+      sales,
+      weeks: calculatedDataByWeeks
     };
   } catch (err) {
     console.error(err);
@@ -99,7 +108,7 @@ interface IFilters {
   pizzas?: string[]
 }
 
-interface IUnitNumber {
+export interface IUnitNumber {
   name: string
   number: number
 }
