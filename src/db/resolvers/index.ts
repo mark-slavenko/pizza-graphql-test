@@ -1,8 +1,8 @@
-import order from './order/order'
+import data from './data/data'
 
 
 export default {
   Query: {
-    queryOrders: order.queryOrders,
+    queryData: data.queryData,
   },
 }

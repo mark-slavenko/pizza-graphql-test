@@ -36,8 +36,43 @@ export default `
     orderId: Int!
     number: Int!
   }
+  
+  input QueryFilters {
+    startDate: DateTime,
+    endDate: DateTime,
+    monthNumber: Int,
+    pizzas: [String]
+  }
+  
+  type Data {
+    unitsSold: [UnitItem]!
+    ingredientsUsed: [usedIngredientItem]!
+    costOfIngredients: Float!
+    sales: Float!
+    weeks: [WeekDataItem]!
+  }
+  
+  type WeekDataItem {
+    startDate: DateTime!
+    endDate: DateTime!
+    unitsSold: [UnitItem]!
+    ingredientsUsed: [usedIngredientItem]!
+    costOfIngredients: Float!
+    sales: Float!
+  }
+  
+  type UnitItem {
+    name: String!
+    number: Int!
+  }
+  
+  type usedIngredientItem {
+    name: String!
+    number: Int!
+  }
+  
 
   type Query {    
-    queryOrders(filters: [JSON]): [Order]
+    queryData(filters: QueryFilters): Data
   }
 `
