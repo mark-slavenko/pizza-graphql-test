@@ -9,7 +9,7 @@ datasource db {
 
 model Order {
   id        Int              @id @default(autoincrement())
-  date      DateTime
+  date      DateTime         @unique
   createdAt DateTime         @default(now())
   pizzas    OrdersToPizzas[]
 }

@@ -3,7 +3,7 @@ import express from 'express'
 import killPort from 'kill-port'
 import cors from 'cors'
 
-import env from "./helpers/env";
+import env from "./lib/helpers/env";
 import resolvers from './db/resolvers'
 import typeDefs from './db/typeDefs'
 
