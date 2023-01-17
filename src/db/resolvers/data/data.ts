@@ -1,4 +1,4 @@
-import moment from "moment";
+import * as moment from "moment";
 
 import prisma from '../../../prisma/prisma';
 import { splitByWeeks, calculateData } from "./helpers";

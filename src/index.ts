@@ -1,7 +1,8 @@
 import { createSchema, createYoga } from 'graphql-yoga'
-import express from 'express'
-import killPort from 'kill-port'
-import cors from 'cors'
+import * as express from "express"
+// @ts-ignore
+import * as killPort from 'kill-port'
+import * as cors from 'cors'
 
 import env from "./lib/helpers/env";
 import resolvers from './db/resolvers'

@@ -1,4 +1,4 @@
-import env from 'dotenv';
+import * as env from 'dotenv';
 
 env.config();
 

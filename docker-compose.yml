@@ -1,0 +1,23 @@
+version: '3.6'
+
+volumes:
+  postgres_data:
+
+services:
+  database:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=pizza
+
+  app:
+   build: .
+   depends_on:
+     - database
+   ports:
+     - 4001:4001
+   env_file: .env
+
