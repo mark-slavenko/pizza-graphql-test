@@ -18,13 +18,17 @@ const queryData = async (_parent: any, { filters }: IProps): Promise<IDataToRetu
       dateLTE = lastDay.toDate()
     } else {
       if (startDate) {
-        dateGTE = startDate;
+        dateGTE = moment(startDate).toDate();
 
       }
 
       if (endDate) {
-        dateLTE = endDate;
+        dateLTE = moment(endDate).toDate();
       }
+    }
+
+    if (dateGTE && dateLTE && dateGTE > dateLTE) {
+      throw new Error("Invalid date values");
     }
 
     const allData = await prisma.order.findMany({
@@ -40,23 +44,21 @@ const queryData = async (_parent: any, { filters }: IProps): Promise<IDataToRetu
               }
             })
         : ({})),
-        ...(pizzas?.length
-                ? ({
-                  pizzas: {
-                    some: {
+      },
+      include: {
+        pizzas: {
+          ...(pizzas?.length
+                  ? ({
+                    where: {
                       pizza: {
                         name: {
                           in: pizzas
                         }
                       }
-                    }
-                  }
-                })
-                : ({})
-        )
-      },
-      include: {
-        pizzas: {
+                    },
+                  })
+                  : ({})
+          ),
           include: {
             pizza: {
               include: {
@@ -72,21 +74,30 @@ const queryData = async (_parent: any, { filters }: IProps): Promise<IDataToRetu
       }
     });
 
+    if (allData?.length) {
+      const dataSplittedByWeeks = splitByWeeks(allData);
+      const calculatedDataByWeeks = dataSplittedByWeeks.map(weekData => calculateData(weekData));
+      const calculatedTotalData = calculateData(allData);
 
-    const dataSplittedByWeeks = splitByWeeks(allData);
-    const calculatedDataByWeeks = dataSplittedByWeeks.map(weekData => calculateData(weekData));
-    const calculatedTotalData = calculateData(allData);
-
-    const { unitsSold, ingredientsUsed, costOfIngredients, sales } = calculatedTotalData;
+      const { unitsSold, ingredientsUsed, costOfIngredients, sales } = calculatedTotalData;
 
 
-    return {
-      unitsSold,
-      ingredientsUsed,
-      costOfIngredients,
-      sales,
-      weeks: calculatedDataByWeeks
-    };
+      return {
+        unitsSold,
+        ingredientsUsed,
+        costOfIngredients,
+        sales,
+        weeks: calculatedDataByWeeks
+      };
+    } else {
+      return {
+        unitsSold: [],
+        ingredientsUsed: [],
+        costOfIngredients: 0,
+        sales: 0,
+        weeks: []
+      }
+    }
   } catch (err) {
     console.error(err);
     throw new Error(err);
@@ -128,3 +139,34 @@ interface IWeekDataItemToReturn extends IDataItemToReturn {
   startDate: Date
   endDate: Date
 }
+
+// export interface IOrderFromDB {
+//   id: number
+//   date: Date
+//   createdAt: Date
+//   pizzas: IPivotPizza[]
+// }
+//
+// interface IPivotPizza {
+//   orderId: number
+//   pizzaId: number
+//   number: number
+//   assignedAt: Date
+//   pizza: IPizzaFromDB[]
+// }
+//
+// interface IPizzaFromDB {
+//   id: number
+//   name: string
+//   price: number
+//   createdAt: Date,
+//   ingredients: IPivotIngredient[]
+// }
+//
+// interface IPivotIngredient {
+//   pizzaId: number
+//   ingredientId: number
+//   units: number
+//   assignedAt: Date,
+//   ingredient: IIngredient
+// }
