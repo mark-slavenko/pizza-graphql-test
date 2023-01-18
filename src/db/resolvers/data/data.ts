@@ -113,8 +113,8 @@ interface IProps {
 }
 
 interface IFilters {
-  startDate?: Date
-  endDate?: Date
+  startDate?: Date | string
+  endDate?: Date | string
   monthNumber?: number
   pizzas?: string[]
 }
