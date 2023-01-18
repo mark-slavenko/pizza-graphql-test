@@ -6,7 +6,7 @@ import { splitByWeeks, calculateData } from "./helpers";
 
 const queryData = async (_parent: any, { filters }: IProps): Promise<IDataToReturn> => {
   try {
-    const { startDate, endDate, monthNumber, pizzas } = filters;
+    const { startDate, endDate, monthNumber, pizzas } = filters || {};
     let dateLTE: Date | null = null;
     let dateGTE: Date | null = null;
 
