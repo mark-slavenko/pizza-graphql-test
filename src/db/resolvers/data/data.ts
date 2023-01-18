@@ -139,34 +139,3 @@ interface IWeekDataItemToReturn extends IDataItemToReturn {
   startDate: Date
   endDate: Date
 }
-
-// export interface IOrderFromDB {
-//   id: number
-//   date: Date
-//   createdAt: Date
-//   pizzas: IPivotPizza[]
-// }
-//
-// interface IPivotPizza {
-//   orderId: number
-//   pizzaId: number
-//   number: number
-//   assignedAt: Date
-//   pizza: IPizzaFromDB[]
-// }
-//
-// interface IPizzaFromDB {
-//   id: number
-//   name: string
-//   price: number
-//   createdAt: Date,
-//   ingredients: IPivotIngredient[]
-// }
-//
-// interface IPivotIngredient {
-//   pizzaId: number
-//   ingredientId: number
-//   units: number
-//   assignedAt: Date,
-//   ingredient: IIngredient
-// }

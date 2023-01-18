@@ -39,7 +39,6 @@
     "graphql-upload": "^11.0.0"
   },
   "scripts": {
-    "lint": "eslint --max-warnings=0 . --ext .ts",
     "start:dev": "npx nodemon",
     "start:prod": "npm run prisma:generate && npm run build && npm run prisma:migrate:deploy && npm run seed && node ./dist/index",
     "build": "tsc",
